@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
         EditText editTextTemperatura = findViewById(R.id.editTextTemperatura);
         String s = editTextTemperatura.getText().toString();
 
+        RadioButton radioButtonCelcius = findViewById(R.id.radioButtonCelsius);
+
+
+
         double temperatura; // declarar variavel
         try {
             temperatura = Double.parseDouble(s); // assign valor
@@ -27,8 +32,14 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        if (radioButtonCelcius.isChecked()) {
+            DadosApp.temperatura = new TemperaturaCelsius(temperatura);
+        }else{
+            DadosApp.temperatura = new TemperaturaFarenheit(temperatura);
+
+        }
+
         Intent intent = new Intent(this, ConsultarTemperaturaActivity.class);
-        intent.putExtra("Temperatura", temperatura);
         startActivity(intent);
     }
 

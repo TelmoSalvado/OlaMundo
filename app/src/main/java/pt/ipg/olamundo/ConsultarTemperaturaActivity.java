@@ -13,10 +13,12 @@ public class ConsultarTemperaturaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultar_temperatura);
 
-        Intent intent = getIntent();
-        double temperatura = intent.getDoubleExtra("Temperatura",0.0);
 
         TextView textViewCelsius = findViewById(R.id.textViewCelsius);
-        textViewCelsius.setText(String.valueOf(temperatura));
+        textViewCelsius.setText(String.valueOf(DadosApp.temperatura.GetCelsius()));
+
+        TextView textViewFahrenheit = findViewById(R.id.textViewFahrenheit);
+        textViewFahrenheit.setText(String.valueOf(DadosApp.temperatura.GetFahrenheit()));
+
     }
 }
