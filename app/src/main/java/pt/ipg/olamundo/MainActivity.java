@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,11 +16,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-    public void mostraTemepratura(View view) {
+
+    public void mostraTemperatura(View view) {
         EditText editTextTemperatura = findViewById(R.id.editTextTemperatura);
         String s = editTextTemperatura.getText().toString();
 
         RadioButton radioButtonCelcius = findViewById(R.id.radioButtonCelsius);
+        RadioButton radioButtonFahrnhiet = findViewById(R.id.radioButtonFahrenheit);
 
 
 
@@ -27,23 +30,22 @@ public class MainActivity extends AppCompatActivity {
         try {
             temperatura = Double.parseDouble(s); // assign valor
         } catch (NumberFormatException e) {
-
             e.printStackTrace();
+            editTextTemperatura.setError("Introduza uma temperatura válida!");
+            editTextTemperatura.requestFocus();
             return;
         }
 
         if (radioButtonCelcius.isChecked()) {
             DadosApp.temperatura = new TemperaturaCelsius(temperatura);
-        }else{
+        }else if (radioButtonFahrnhiet.isChecked()){
             DadosApp.temperatura = new TemperaturaFarenheit(temperatura);
-
+        }else {
+            radioButtonCelcius.setError("Indique as unidades da temperatura");
+            radioButtonFahrnhiet.setError("Indique as unidades da temperatura");
+            Toast.makeText(this, "Indique as unidades da temperatura", Toast.LENGTH_LONG).show();
         }
 
-        Intent intent = new Intent(this, ConsultarTemperaturaActivity.class);
-        startActivity(intent);
-    }
-
-    public void mostraTemperatura(View view) {
         Intent intent = new Intent(this, ConsultarTemperaturaActivity.class);//permite mudar de atividade(ecra)
         startActivity(intent);
     }
